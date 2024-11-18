@@ -22,8 +22,6 @@ from ttt_module.openai_model import GPT
 
 logging.basicConfig(level=logging.INFO)
 
-OPENAI_KEY = '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'
-
 
 class AsyncSpeechTask(QObject):
     finished = Signal(str)
@@ -72,7 +70,8 @@ class Live2DApp(QWidget):
     def __init__(self, args):
         super().__init__()
 
-        self.llm = GPT(OPENAI_KEY, 1024, model='gpt-4o-mini', system_prompt=resource_loader.load_text('prompt.txt'))
+        self.llm = GPT(args['api_key'], 1024, model='gpt-4o-mini',
+                       system_prompt=resource_loader.load_text('prompt.txt'))
         # 保存上下文
         self.llm.start_queue()
         print('loading whisper')
